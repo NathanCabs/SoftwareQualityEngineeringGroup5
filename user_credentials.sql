@@ -1,0 +1,3 @@
+INSERT INTO public.user_credentials (id, email, name, password, role, is_hashed_password) VALUES (1, 'admin@sqewheelz.com', 'Admin', '$2a$10$ga2OrEzydTfxTwCpH.hwnunklUZOeDgZ0ZJdgblVQNwoWH5OhSUh6', 'ADMIN', null);
+INSERT INTO public.user_credentials (id, email, name, password, role, is_hashed_password) VALUES (2, 'john.doe@ciit.edu.ph', 'John Doe', '$2a$10$WeSnb1V2.VF.ZFUcsd4dMuPrcLJYl8Ywn.NVkhsAqT15beznbrk5u', 'USER', null);
+INSERT INTO public.user_credentials (id, email, name, password, role, is_hashed_password) VALUES (3, 'lucy.lee@ciit.edu.ph', 'Lucy Lee', '$2a$10$QfsAoTsWJJ1RWKKj33f8ternP0gXkWG6TI6sZfrdGvA9sTnJzhUrG', 'USER', null);
