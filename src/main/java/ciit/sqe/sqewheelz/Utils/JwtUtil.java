@@ -3,9 +3,7 @@ package ciit.sqe.sqewheelz.Utils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
@@ -15,10 +13,11 @@ public class JwtUtil {
     private static final String SECRET_KEY = "stringSecretKey123";
 
     //Generate token
-    public String generateToken(String email, String role) {
+    public String generateToken(String email, String role, Long userId) {
         return Jwts.builder()
                 .setSubject(email)
                 .claim("role", role)
+                .claim("userId", userId)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
@@ -39,6 +38,9 @@ public class JwtUtil {
     public String extractRole(String token) {
         return (String) extractAllClaims(token).get("role");
     }
+
+    //Extract userId from token
+    public Long extractUserId(String token) { return extractAllClaims(token).get("userId", Long.class); }
 
     //Check if token is expired
     private Boolean isTokenExpired(String token) {

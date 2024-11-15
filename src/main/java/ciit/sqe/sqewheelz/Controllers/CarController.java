@@ -52,6 +52,7 @@ public class CarController {
     @PostMapping
     public String addCar(@RequestBody Car car, HttpServletRequest request){
         String role = (String) request.getAttribute("role");
+        //System.out.println(role);
         if(!"ADMIN".equals(role)){
          return "Access denied: Admins only!";
         }

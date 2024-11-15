@@ -42,7 +42,7 @@ public class AuthController {
 
         if (loggedInUser.isPresent()) {
             User foundUser = loggedInUser.get();
-            String token = jwtUtil.generateToken(foundUser.getEmail(), foundUser.getRole());
+            String token = jwtUtil.generateToken(foundUser.getEmail(), foundUser.getRole(), foundUser.getId());
             return "Bearer " + token;
          /*   if ("ADMIN".equals(foundUser.getRole())) {
                 return "Admin login successful! Redirecting to admin dashboard.";

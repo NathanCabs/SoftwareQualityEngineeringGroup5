@@ -24,11 +24,13 @@ public class JwtFilter extends OncePerRequestFilter {
             String token = authHeader.substring(7);
             String email = jwtUtil.extractEmail(token);
             String role = jwtUtil.extractRole(token);
+            Long userId = jwtUtil.extractUserId(token);
 
 
             //Attach email and role to request attributes for further use
             request.setAttribute("email", email);
             request.setAttribute("role", role);
+            request.setAttribute("userId", userId);
         }
         filterChain.doFilter(request, response);
 

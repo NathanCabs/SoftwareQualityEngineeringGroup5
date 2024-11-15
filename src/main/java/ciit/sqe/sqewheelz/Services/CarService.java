@@ -44,14 +44,32 @@ public class CarService {
     }
 
     public Car updateCar(Long id, Car carDetails){
-        return carRepository.findById(id).map(car -> {
+        Car car = carRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Car not found with id " + id));
+        if (carDetails.getBrand() != null){
             car.setBrand(carDetails.getBrand());
+        }
+        if (carDetails.getModel() != null){
             car.setModel(carDetails.getModel());
+        }
+        if (carDetails.getType() != null){
             car.setType(carDetails.getType());
+        }
+        if (carDetails.getSeats() != 0){
             car.setSeats(carDetails.getSeats());
+        }
+        if (carDetails.getPrice() != 0){
             car.setPrice(carDetails.getPrice());
-            return carRepository.save(car);
-        }).orElseThrow(() -> new RuntimeException("Car not found with id" + id));
+        }
+        return carRepository.save(car);
+//        return carRepository.findById(id).map(car -> {
+//            car.setBrand(carDetails.getBrand());
+//            car.setModel(carDetails.getModel());
+//            car.setType(carDetails.getType());
+//            car.setSeats(carDetails.getSeats());
+//            car.setPrice(carDetails.getPrice());
+//            return carRepository.save(car);
+//        }).orElseThrow(() -> new RuntimeException("Car not found with id" + id));
     }
 
     public void deleteCar(Long id){
