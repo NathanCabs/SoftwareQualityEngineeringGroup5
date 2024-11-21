@@ -4,6 +4,8 @@ package ciit.sqe.sqewheelz.Controllers;
 import ciit.sqe.sqewheelz.Model.User;
 import ciit.sqe.sqewheelz.Services.UserService;
 import ciit.sqe.sqewheelz.Utils.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,6 +54,14 @@ public class AuthController {
         } else {
             return "Invalid email or password.";
         }
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("Authorization", null);
+        response.setHeader("Authorization", null);
+
+        return "Logout successful!";
     }
 
 //    @PostMapping("/login")
