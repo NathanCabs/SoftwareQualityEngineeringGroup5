@@ -75,4 +75,12 @@ public class CarService {
     public void deleteCar(Long id){
         carRepository.deleteById(id);
     }
+
+    public void updateCarAvailability(Long carId, boolean availability) {
+        Car car = carRepository.findById(carId)
+                .orElseThrow(() -> new RuntimeException("Car not found with id " + carId));
+        car.setAvailable(availability);
+        carRepository.save(car);
+    }
+
 }

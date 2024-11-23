@@ -11,4 +11,5 @@ public interface BookingService {
     List<Booking> getAllBookings();
     Booking updateBooking(Long id, Booking booking);
     void deleteBooking(Long id);
+    void returnCar(Long id);
 }

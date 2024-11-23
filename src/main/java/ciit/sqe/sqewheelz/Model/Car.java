@@ -1,10 +1,7 @@
 package ciit.sqe.sqewheelz.Model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Car {
@@ -17,15 +14,19 @@ public class Car {
     private String type;
     private int seats;
     private double price;
+    @Column(name = "is_available")
+    private boolean isAvailable;
+
 
     public Car(){}
 
-    public Car (String brand, String model, String type, int seats, double price) {
+    public Car (String brand, String model, String type, int seats, double price, boolean isAvailable) {
         this.brand = brand;
         this.model = model;
         this.type = type;
         this.seats = seats;
         this.price = price;
+        this.isAvailable = isAvailable;
     }
 
     public Long getId() {
@@ -74,5 +75,13 @@ public class Car {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
     }
 }

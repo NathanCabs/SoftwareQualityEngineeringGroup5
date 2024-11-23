@@ -6,6 +6,7 @@ import ciit.sqe.sqewheelz.Services.BookingService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -95,5 +96,15 @@ public class BookingController {
             return "Booking deleted successfully";
         }
         throw new RuntimeException("Access denied: You can only delete your own booking");
+    }
+
+    @PutMapping("/{id}/return")
+    public ResponseEntity<String> returnCar(@PathVariable Long id){
+        try{
+            bookingService.returnCar(id);
+            return ResponseEntity.ok("Car returned successfully");
+        }catch (Exception e){
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 }

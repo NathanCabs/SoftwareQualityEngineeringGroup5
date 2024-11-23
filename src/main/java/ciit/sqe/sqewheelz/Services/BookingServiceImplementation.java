@@ -35,12 +35,18 @@ public class BookingServiceImplementation implements BookingService {
         User user = userRepository.findById(booking.getUser_Id()).orElse(null);
         Car car = carRepository.findById(booking.getCar_Id()).orElse(null);
 
+        assert car != null;
+        if(!car.isAvailable()) throw new RuntimeException("Car is not available");
+
         long durationInDays = ChronoUnit.DAYS.between(booking.getBookingDate(), booking.getReturnDate());
 
         //Fetch car price from Car repository and calculate the amount
-        assert car != null;
+       
         double carPrice = durationInDays * car.getPrice();
         booking.setAmount(carPrice);
+
+        car.setAvailable(false);
+        carRepository.save(car);
 
         return bookingRepository.save(booking);
     }
@@ -92,6 +98,25 @@ public class BookingServiceImplementation implements BookingService {
     @Override
     public void deleteBooking(Long id) {
         bookingRepository.deleteById(id);
+    }
+
+    public void returnCar(Long id) {
+        Booking booking = bookingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Booking not found with id " + id));
+
+        if (booking.getStatus().equals("CONFIRMED")) {
+            // Change booking status to "COMPLETED"
+            booking.setStatus("COMPLETED");
+            bookingRepository.save(booking);
+
+            // Set car availability back to true after returning
+            Car car = carRepository.findById(booking.getCar_Id())
+                    .orElseThrow(() -> new RuntimeException("Car not found with id " + booking.getCar_Id()));
+            car.setAvailable(true); // Car is available again
+            carRepository.save(car);
+        } else {
+            throw new RuntimeException("Booking is not active, cannot return car");
+        }
     }
 
 
